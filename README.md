@@ -11,3 +11,7 @@ java:
 
   # headless or not
   headless: true
+
+- hosts: all
+  roles:
+    - role: java/openjdk
