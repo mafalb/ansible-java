@@ -1,0 +1,14 @@
+#! vim: set ft=yaml ts=2:
+---
+
+- name: "{{ java.type }} is installed"
+  when: not java.headless
+  package:
+    name: openjdk-{{ java.version }}-{{ java.type }}
+    state: present
+
+- name: "{{ java.type }} is installed (headless variant)"
+  when: java.headless
+  package:
+    name: openjdk-{{ java.version }}-{{ java.type }}-headless
+    state: present

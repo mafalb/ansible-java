@@ -1,0 +1,9 @@
+#! vim: set ft=yaml ts=2:
+---
+
+- assert:
+    that:
+      - ansible_os_family in ["RedHat","Debian"]
+
+- when: java.type == 'jre'
+  include_tasks: "{{ ansible_os_family }}.yml"

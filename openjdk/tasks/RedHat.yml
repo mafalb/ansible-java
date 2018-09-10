@@ -1,0 +1,22 @@
+#! vim: set ft=yaml ts=2:
+---
+
+- name: jre is installed
+  when: java.type == "jre" and not java.headless
+  package:
+    name: java-1.{{ java.version }}.0-openjdk
+    state: present
+
+- name: jre is installed (headless variant)
+  when: java.type == "jre" and java.headless
+  package:
+    name: java-1.{{ java.version }}.0-openjdk-headless
+    state: present
+
+# java-openjdk-devel pulls in java-openjdk, i.e. there is no headless variant
+#
+- name: jdk is installed
+  when: java.type == "jdk"
+  package:
+    name: java-1.{{ java.version }}.0-openjdk-devel
+    state: present
