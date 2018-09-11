@@ -1,6 +1,8 @@
 
 Variables
 
+
+```
 java:
 
   # java version
@@ -11,7 +13,17 @@ java:
 
   # headless or not
   headless: true
+```
 
+```
 - hosts: all
   roles:
     - role: java/openjdk
+```
+
+```
+- hosts: all
+  roles:
+    - role: java/oracle
+      external_rpm_file: jre-8u181-linux-x64.rpm
+```

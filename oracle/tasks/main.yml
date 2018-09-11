@@ -1,0 +1,18 @@
+#! vim: ft=yaml ts=2:
+---
+
+# We do not know if we are allowed to distribute oracles stuff
+# so we pass the path to the rpm
+#
+- name: assert
+  assert:
+    that:
+      - external_rpm_file is defined
+
+- name: java rpm is installed
+  include_role:
+    name: rpm
+  vars:
+    rpm: jre1.{{ java.version }}
+    rpm_src: "{{ external_rpm_file }}"
+    rpm_dest: /tmp/oracle_jre-{{ java.version }}.rpm
