@@ -1,0 +1,42 @@
+#! vim: ft=yaml ts=2:
+---
+
+# We do not know if we are allowed to distribute oracles stuff
+# so we pass the path to the rpm
+#
+- name: assert
+  assert:
+    that:
+      - java.version == 8
+      - java.u is defined
+      - java.external_archive_file|regex_search('j..-{{ java.version }}u{{ java.u }}-')
+
+- name: get version variables
+  include_vars:
+    file: "{{ java.version }}.yml"
+
+- debug: var=java
+  tags:
+    - never
+    - debug
+
+- debug: msg='{{ java.external_archive_file[0:2]}}{{ java.version_string_long }}_u{{ java.u }}'
+  tags:
+    - never
+    - debug
+
+- name: java tar.gz is installed
+  when: java.external_archive_file.endswith('.tar.gz')
+  unarchive:
+    src: "{{ java.external_archive_file }}"
+    dest: /usr/local
+    creates: /usr/local/{{ java.external_archive_file[0:3]}}{{ java.version_string_long }}_{{ java.u }}
+
+- name: java rpm is installed
+  when: java.external_archive_file.endswith('.rpm')
+  include_role:
+    name: rpm
+  vars:
+    rpm: java.external_archive_file[0:2]{{ java.version_string_short }}
+    rpm_src: "{{ java.external_rpm_file }}"
+    rpm_dest: /tmp/oracle_jre-{{ java.version }}u{{ java.u }}.rpm

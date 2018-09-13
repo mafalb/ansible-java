@@ -1,6 +1,20 @@
 
-Variables
+# An ansible role for installing java
 
+## Oracle java versioning
+
+https://www.oracle.com/technetwork/java/javase/jdk8-naming-2157130.html
+
+i.e.
+tar.gz: the file is named jdk-8u181-bla.tar and installs into a directory jdk-1.8.0_181
+rpm: the file is named jdk-8u181-linux-x64.rpm, but is registered with name jdk1.8
+
+version number: 8
+version: 1.8
+full version: 1.8.0
+update version number: 181
+
+## Variables
 
 ```
 java:

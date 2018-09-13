@@ -3,3 +3,4 @@
 
 java:
   headless: true
+  type: jre

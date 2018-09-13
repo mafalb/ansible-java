@@ -1,5 +1,2 @@
 #! vim: set ft=yaml ts=2:
 ---
-
-java:
-  version: 8

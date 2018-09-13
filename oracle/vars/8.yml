@@ -1,0 +1,10 @@
+#! vim: set ft=yaml ts=2:
+---
+
+# old java naming is a mess
+# https://www.oracle.com/technetwork/java/javase/jdk8-naming-2157130.html
+#
+java:
+  version: 8
+  version_string_short: 1.8
+  version_string_long: 1.8.0

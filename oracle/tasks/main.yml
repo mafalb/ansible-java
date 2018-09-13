@@ -4,15 +4,19 @@
 # We do not know if we are allowed to distribute oracles stuff
 # so we pass the path to the rpm
 #
-- name: assert
+- name: do some sanity checks
   assert:
     that:
-      - external_rpm_file is defined
+      - java.external_archive_file is defined
+      - java.external_archive_file.endswith('.rpm') or java.external_archive_file.endswith('.tar.gz')
+      - java.version is defined
 
-- name: java rpm is installed
-  include_role:
-    name: rpm
-  vars:
-    rpm: jre1.{{ java.version }}
-    rpm_src: "{{ external_rpm_file }}"
-    rpm_dest: /tmp/oracle_jre-{{ java.version }}.rpm
+- name: do not try to install a rpm on Debian
+  when: ansible_os_family == 'Debian'
+  assert:
+    that:
+      - not java.external_archive_file.endswith('.rpm')
+
+- name: old java
+  when: java.version <= 8
+  include_tasks: old.yml
