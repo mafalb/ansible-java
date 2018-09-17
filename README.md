@@ -39,5 +39,14 @@ java:
 - hosts: all
   roles:
     - role: java/oracle
-      external_rpm_file: jre-8u181-linux-x64.rpm
+      java:
+        external_archive_file: jre-8u181-linux-x64.rpm
+```
+
+```
+- hosts: all
+  roles:
+    - role: java/oracle
+      java:
+        external_archive_file: jdk-8u181-fcs-bin-b13-linux-arm32-vfp-hflt-07_jul_2018.tar.gz
 ```

@@ -1,0 +1,29 @@
+#! vim: ft=yaml ts=2:
+---
+
+- name: get full version string from tar.gz
+  delegate_to: localhost
+  check_mode: false
+  changed_when: false
+  shell: tar tfz {{ java.external_archive_file }}|grep -m1 bin/java$|cut -f1 -d/
+  args:
+    warn: false
+  register: _java_full_version_string
+
+- debug: var=_java_full_version_string
+  tags:
+    - never
+    - debug
+
+- assert:
+    that:
+      - _java_full_version_string.stdout_lines|length == 1
+      - _java_full_version_string.stdout|length > 0
+      - _java_full_version_string.stdout.startswith('jdk') or _java_full_version_string.stdout.startswith('jre')
+
+- name: java tar.gz is installed
+  when: java.external_archive_file.endswith('.tar.gz')
+  unarchive:
+    src: "{{ java.external_archive_file }}"
+    dest: /usr/local
+    creates: /usr/local/{{ _java_full_version_string.stdout }}

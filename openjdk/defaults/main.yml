@@ -2,5 +2,6 @@
 ---
 
 java:
+  version: 8
   headless: true
   type: jre
